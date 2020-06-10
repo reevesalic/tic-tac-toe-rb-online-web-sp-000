@@ -9,6 +9,38 @@ def display_board(board)
   end
 board = ["   ", "   ", "   ", "   ", "   ", "   ", "   ", "   ", "   "]
 
+def input_to_index(user_input = "X")
+  user_input.to_i - 1
+  end
+
+def move(board, index, win = "X")
+  board[index] = win
+
+  end
+
+  def turn(board)
+  puts "Please enter 1-9:"
+  user_input = gets.strip
+  index = input_to_index(user_input)
+  if valid_move?(board, index)
+    move(board, index, player(board))
+    display_board(board)
+  else
+    turn(board)
+  end
+end
+
+def turn_count(board)
+  counter = 0
+  board.each {|space|
+    if space == "X" || space == "O"
+      counter += 1
+    end
+  }
+  counter
+end
+
+
 def position_taken?(board, index)
   !(board[index].nil? || board[index] == " ")
 end
@@ -26,6 +58,7 @@ def won?(board)
   end
   false
 end
+
 def full?(board)
   if board.any? {|index| index == nil || index == " "}
     return false
